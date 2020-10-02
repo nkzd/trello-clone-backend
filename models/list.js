@@ -2,15 +2,11 @@ const { Schema } = require('mongoose');
 const db = require('../db');
 const Schema = mongoose.Schema;
 
-const List = db.model('List', {
+const ListSchema = new Schema({
   name: String,
-  description: String,
-  labels: [LabelSchema],
-  dueDate: Date,
-  status: {
-    type: String,
-    enum: ['Not Started', 'In-Progress', 'On-Hold', 'Cancelled', 'Complete'],
-  },
+  cards: [CardSchema],
 });
+
+const List = db.model('List', ListSchema);
 
 module.exports = List;
