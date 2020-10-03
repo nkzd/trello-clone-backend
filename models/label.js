@@ -1,5 +1,5 @@
 const { Schema } = require('mongoose');
-const db = require('../db');
+const db = require('./db');
 
 const LabelSchema = new Schema({
   name: { type: String, required: true },

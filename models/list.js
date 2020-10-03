@@ -1,9 +1,9 @@
 const { Schema } = require('mongoose');
-const db = require('../db');
+const db = require('./db');
 const CardSchema = require('./card');
 
 const ListSchema = new Schema({
-  name: String,
+  name: { type: String, required: true },
   cards: [CardSchema],
 });
 
