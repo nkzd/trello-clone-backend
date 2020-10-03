@@ -11,25 +11,30 @@ const createList = async (req, res) => {
   res.json(list);
 };
 
-const getList = async (req, res, next) => {
-  try {
-    const list = await List.findById(req.params.id);
-    res.json(list);
-  } catch (error) {
-    next(error);
-  }
+const getList = async (req, res) => {
+  const list = await List.findById(req.params.id);
+  res.json(list);
 };
 
-console.log(
-  autoCatch({
-    getLists,
-    createList,
-    getList,
-  })
-);
+const editList = async (req, res) => {
+  const change = req.body;
+  const list = await List.findById(req.params.id);
+  for (key in change) {
+    list[key] = change[key];
+  }
+  await list.save();
+  return res.json(list);
+};
+
+const deleteList = async (req, res) => {
+  await List.deleteOne({ _id: req.params.id });
+  res.end();
+};
 
 module.exports = autoCatch({
   getLists,
   createList,
   getList,
+  editList,
+  deleteList,
 });
