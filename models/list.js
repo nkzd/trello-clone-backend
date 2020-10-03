@@ -1,6 +1,6 @@
 const { Schema } = require('mongoose');
 const db = require('../db');
-const Schema = mongoose.Schema;
+const CardSchema = require('./card');
 
 const ListSchema = new Schema({
   name: String,
