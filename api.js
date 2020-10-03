@@ -1,3 +1,4 @@
+const e = require('express');
 const List = require('./models/list');
 const autoCatch = require('./util/autocatch');
 
@@ -23,12 +24,66 @@ const editList = async (req, res) => {
     list[key] = change[key];
   }
   await list.save();
-  return res.json(list);
+  res.json(list);
 };
 
 const deleteList = async (req, res) => {
   await List.deleteOne({ _id: req.params.id });
   res.end();
+};
+
+const getCards = async (req, res) => {
+  const list = await List.findById(req.params.id);
+  res.json(list.cards);
+};
+
+const createCard = async (req, res) => {
+  const list = await List.findById(req.params.id);
+  const card = req.body;
+  list.cards.push(card);
+  await list.save();
+  res.json(card);
+};
+
+const getCard = async (req, res, next) => {
+  const list = await List.findById(req.params.listId);
+  const card = list.cards.find((c) => c._id.toString() === req.params.cardId);
+  if (!card) {
+    next();
+  } else {
+      res.json(card);
+  }
+};
+
+const editCard = async (req, res, next) => {
+  const change = req.body;
+
+  const list = await List.findById(req.params.listId);
+  const card = list.cards.find((c) => c._id.toString() === req.params.cardId);
+  if (!card) {
+    next();
+  } else {
+    for (key in change) {
+      card[key] = change[key];
+    }
+    await list.save();
+    res.json(card);
+  }
+};
+
+const deleteCard = async (req, res, next) => {
+  const list = await List.findById(req.params.listId);
+  const cardIndex = list.cards.findIndex(
+    (c) => c._id.toString() === req.params.cardId
+  );
+  console.log(cardIndex);
+  if (cardIndex === -1) {
+    next();
+  } else {
+    list.cards.splice(cardIndex, 1);
+    await list.save();
+    res.end();
+  }
 };
 
 module.exports = autoCatch({
@@ -37,4 +92,9 @@ module.exports = autoCatch({
   getList,
   editList,
   deleteList,
+  getCards,
+  createCard,
+  getCard,
+  editCard,
+  deleteCard,
 });

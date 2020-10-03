@@ -2,7 +2,7 @@ const { Schema } = require('mongoose');
 const { LabelSchema } = require('./label');
 
 const CardSchema = new Schema({
-  name: String,
+  name: { type: String, required: true },
   description: String,
   labels: [LabelSchema],
   dueDate: Date,
