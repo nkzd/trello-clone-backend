@@ -8,17 +8,14 @@ const port = process.env.PORT || 1337;
 
 const app = express();
 
-//cors
 app.use(bodyParser.json());
 app.use(cors());
-
 
 app.get('/list',api.getLists);
 app.get('/list/:id',api.getList);
 app.post('/list/',api.createList);
 app.patch('/list/:id',api.editList);
 app.delete('/list/:id',api.deleteList);
-// app.post('/list/:id/card/:id/swap',api.swapCard);
 
 app.get('/list/:id/card',api.getCards);
 app.get('/list/:listId/card/:cardId',api.getCard);

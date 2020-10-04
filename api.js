@@ -76,7 +76,6 @@ const deleteCard = async (req, res, next) => {
   const cardIndex = list.cards.findIndex(
     (c) => c._id.toString() === req.params.cardId
   );
-  console.log(cardIndex);
   if (cardIndex === -1) {
     next();
   } else {
@@ -96,5 +95,5 @@ module.exports = autoCatch({
   createCard,
   getCard,
   editCard,
-  deleteCard,
+  deleteCard
 });
