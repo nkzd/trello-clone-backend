@@ -2,8 +2,8 @@ const { Schema } = require('mongoose');
 const db = require('./db');
 
 const LabelSchema = new Schema({
-  name: { type: String, required: true },
-  color: String,
+  name: String,
+  color: { type: String, required: true },
 });
 
 const CustomLabel = db.model('CustomLabel', LabelSchema);
