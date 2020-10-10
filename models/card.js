@@ -6,7 +6,7 @@ const CardSchema = new Schema({
   description: String,
   labels: [LabelSchema],
   dueDate: Date,
-  status: {
+  progressStatus: {
     type: String,
     enum: ['Not Started', 'In-Progress', 'On-Hold', 'Cancelled', 'Complete'],
   },
