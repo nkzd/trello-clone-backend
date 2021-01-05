@@ -41,8 +41,8 @@ const createCard = async (req, res) => {
   const list = await List.findById(req.params.id);
   const card = req.body;
   list.cards.push(card);
-  await list.save();
-  res.json(card);
+  const result = await list.save();
+  res.json(result.cards[result.cards.length-1]);
 };
 
 const getCard = async (req, res, next) => {
