@@ -6,9 +6,9 @@ const LabelSchema = new Schema({
   color: { type: String, required: true },
 });
 
-const CustomLabel = db.model('CustomLabel', LabelSchema);
+const Labels = db.model('Labels', LabelSchema);
 
 module.exports = {
   LabelSchema,
-  CustomLabel,
+  Labels,
 };

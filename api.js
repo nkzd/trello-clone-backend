@@ -1,5 +1,6 @@
 const e = require('express');
 const List = require('./models/list');
+const { Labels } = require('./models/label');
 const autoCatch = require('./util/autocatch');
 
 const getLists = async (req, res) => {
@@ -42,7 +43,7 @@ const createCard = async (req, res) => {
   const card = req.body;
   list.cards.push(card);
   const result = await list.save();
-  res.json(result.cards[result.cards.length-1]);
+  res.json(result.cards[result.cards.length - 1]);
 };
 
 const getCard = async (req, res, next) => {
@@ -51,7 +52,7 @@ const getCard = async (req, res, next) => {
   if (!card) {
     next();
   } else {
-      res.json(card);
+    res.json(card);
   }
 };
 
@@ -85,6 +86,36 @@ const deleteCard = async (req, res, next) => {
   }
 };
 
+const getLabels = async (req, res) => {
+  const labels = await Labels.find({});
+  res.json(labels);
+};
+
+const createLabel = async (req, res) => {
+  const label = await Labels.create(req.body);
+  res.json(label);
+};
+
+const getLabel = async (req, res) => {
+  const label = await Labels.findById(req.params.id);
+  res.json(label);
+};
+
+const editLabel = async (req, res) => {
+  const change = req.body;
+  const label = await Labels.findById(req.params.id);
+  for (key in change) {
+    label[key] = change[key];
+  }
+  await label.save();
+  res.json(label);
+};
+
+const deleteLabel = async (req, res) => {
+  await Labels.deleteOne({ _id: req.params.id });
+  res.end();
+};
+
 module.exports = autoCatch({
   getLists,
   createList,
@@ -95,5 +126,10 @@ module.exports = autoCatch({
   createCard,
   getCard,
   editCard,
-  deleteCard
+  deleteCard,
+  getLabels,
+  getLabel,
+  createLabel,
+  editLabel,
+  deleteLabel,
 });
