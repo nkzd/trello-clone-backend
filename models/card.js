@@ -1,10 +1,9 @@
 const { Schema } = require('mongoose');
-const { LabelSchema } = require('./label');
 
 const CardSchema = new Schema({
   name: { type: String, required: true },
   description: String,
-  labels: [LabelSchema],
+  labels: [{ type: Schema.Types.ObjectId, ref: 'Labels' }],
   dueDate: Number,
   progressStatus: {
     type: String,
