@@ -7,7 +7,7 @@ const CardSchema = new Schema({
   dueDate: Number,
   progressStatus: {
     type: String,
-    enum: ['Not Started', 'In-Progress', 'On-Hold', 'Cancelled', 'Complete'],
+    enum: ['Not Started', 'In-Progress', 'On-Hold', 'Cancelled', 'Complete', null],
   },
 });
 
