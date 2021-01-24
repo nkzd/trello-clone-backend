@@ -112,7 +112,13 @@ const editLabel = async (req, res) => {
 };
 
 const deleteLabel = async (req, res) => {
-  await Labels.deleteOne({ _id: req.params.id });
+  const labelId = req.params.id;
+
+  await Labels.deleteOne({ _id: labelId });
+  await List.updateMany(
+    { 'cards.labels': labelId },
+    { $pull: { cards: { labels: labelId } } }
+  );
   res.end();
 };
 
