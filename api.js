@@ -1,4 +1,3 @@
-const e = require('express');
 const List = require('./models/list');
 const { Labels } = require('./models/label');
 const autoCatch = require('./util/autocatch');
@@ -122,6 +121,25 @@ const deleteLabel = async (req, res) => {
   res.end();
 };
 
+const reorderCards = async (req, res) => {
+  const { sourceId, destinationId, sourceIndex, destinationIndex } = req.body;
+
+  const sourceList = await List.findById(sourceId);
+  const card = sourceList.cards[sourceIndex];
+
+  if (sourceIndex > -1) {
+    sourceList.cards.splice(sourceIndex, 1);
+  }
+
+  await sourceList.save();
+
+  const destinationList = await List.findById(destinationId);
+  destinationList.cards.splice(destinationIndex, 0, card);
+  await destinationList.save();
+
+  res.end();
+};
+
 module.exports = autoCatch({
   getLists,
   createList,
@@ -138,4 +156,5 @@ module.exports = autoCatch({
   createLabel,
   editLabel,
   deleteLabel,
+  reorderCards,
 });

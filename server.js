@@ -22,6 +22,7 @@ app.get('/list/:listId/card/:cardId', api.getCard);
 app.post('/list/:id/card', api.createCard);
 app.patch('/list/:listId/card/:cardId', api.editCard);
 app.delete('/list/:listId/card/:cardId', api.deleteCard);
+app.post('/list/reorderCards', api.reorderCards);
 
 app.get('/label', api.getLabels);
 app.get('/label/:id', api.getLabel);
