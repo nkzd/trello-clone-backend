@@ -124,6 +124,10 @@ const deleteLabel = async (req, res) => {
 const reorderCards = async (req, res) => {
   const { sourceId, destinationId, sourceIndex, destinationIndex } = req.body;
 
+  if (!destinationId) {
+    return res.end();
+  }
+
   const sourceList = await List.findById(sourceId);
   const card = sourceList.cards[sourceIndex];
 
