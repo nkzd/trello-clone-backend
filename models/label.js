@@ -2,7 +2,7 @@ const { Schema } = require('mongoose');
 const db = require('./db');
 
 const LabelSchema = new Schema({
-  name: String,
+  name: { type: String, maxlength: 30 },
   color: { type: String, required: true },
 });
 
