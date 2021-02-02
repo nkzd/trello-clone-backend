@@ -3,7 +3,7 @@ const db = require('./db');
 const CardSchema = require('./card');
 
 const ListSchema = new Schema({
-  name: { type: String, required: true },
+  name: { type: String, required: true, maxlength: 50 },
   cards: [CardSchema],
 });
 
